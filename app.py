@@ -8,7 +8,7 @@ bot = telebot.TeleBot(TOKEN)
 
 @bot.message_handler(commands=['start'])
 def start(message: telebot.types.Message):
-    text = 'Привет! Я ,Фокс, Конвертарор валют и я могу:  \n- Показать список доступных валют через команду /values \
+    text = 'Привет! Я ,Фокс, конвертарор валют и я могу:  \n- Показать список доступных валют через команду /values \
     \n- Вывести конвертацию валюты через команду <имя валюты> <в какую валюту перевести> <количество переводимой валюты>\
     \n - Напомнить, что я могу через команду /help'
     bot.reply_to(message, text)
@@ -34,11 +34,12 @@ def convert(message: telebot.types.Message):
         values = message.text.split(' ')
 
         if len(values) != 3:
-            raise ConvertionExeption('Введите валюту, валюту в которую нужно конвертировать и сумму через пробел.')
+            raise ConvertionExeption('Введите комманду:\
+             \nвалюта, валюта в которую нужно конвертировать и сумму через пробел.')
 
         quote, base, amount = values
         total_base = CryptoConverter.convert(quote, base, amount)
-    except ConvertionExeption as  e:
+    except ConvertionExeption as e:
         bot.reply_to(message, f'Ошибка пользователя\n{e}')
     except Exception as e:
         bot.reply_to(message, f'Не удалость обработать команду\n{e}')
